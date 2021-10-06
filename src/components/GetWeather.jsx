@@ -18,15 +18,17 @@ const GetWeather = () => {
     if (form.city === ''){
       alert('Add a city')
     } else {
-      const data = await fetch(
+      try {const data = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${form.city},${form.country}&units=metric&appid=${apiKey}`,
       )
         .then((response) => response.json())
         .then((data) => data);
-
+        debugger
       setWeather({
         data: data,
-      })
+      }) } catch (error) {
+        console.log(error)
+      } 
     }
   }
 
@@ -88,7 +90,7 @@ return (
       border-width: 1px;
     `}>GET WEATHER</button>
   </form>
-  {weather.data !== undefined ? (
+  {weather.data !== undefined && data.weather ? (
           <div>
             <DisplayWeather data={weather.data}></DisplayWeather>
           </div>

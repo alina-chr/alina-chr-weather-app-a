@@ -24,7 +24,7 @@ color = '#5dcfe8'
   return (
     <div>
       <div css={css`
-          background-color: ${color}; margin-top:10px; display:flex; flex-direction: column};
+          background-color: ${color}; margin-top:10px; display:flex; flex-direction: column
         `}>
         <div>
         <p> Today, {new Date().toLocaleDateString()}, {city}, {country} </p>
