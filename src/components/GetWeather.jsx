@@ -12,8 +12,7 @@ const GetWeather = () => {
     country: '',
   });
 
-  const [weather, setWeather] = useState(null);
-  const [notFound, setNotFound] = useState(false);
+  const [weather, setWeather] = useState([]);
   async function getWeatherData(event) {
     event.preventDefault();
     if (form.city === '') {
@@ -23,18 +22,12 @@ const GetWeather = () => {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${form.city},${form.country}&units=metric&appid=${apiKey}`,
         );
-          if (response.status=('404')) { throw new Error ('404') }
-
-        const  data  = await response.json()
-
-        ;
+        const  data  = await response.json();
         setWeather({
           data: data,
         });
       } catch (error) {
-        if (error.message === '404'){
-          setNotFound(true)
-        };
+        console.log(error);
       }
     }
   }
@@ -60,7 +53,7 @@ const GetWeather = () => {
           text-align: center;
         `}
       >
-        <form onSubmit={getWeatherData}>
+        <form onSubmit={(event) => getWeatherData(event)}>
           <input
             type="text"
             name="city"
@@ -108,11 +101,11 @@ const GetWeather = () => {
             GET WEATHER
           </button>
         </form>
-        {weather?.data && !notFound ? (
+        {weather.data !== undefined ? (
           <div>
             <DisplayWeather data={weather.data}></DisplayWeather>
           </div>
-        ) : <p>Error</p>}
+        ) : null}
       </div>
     </>
   );
