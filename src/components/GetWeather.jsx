@@ -86,7 +86,6 @@ return (
       outline: none;
       background: rgba(255, 255, 255, 0.3);
       border-width: 1px;
-      }
     `}>GET WEATHER</button>
   </form>
   {weather.data !== undefined ? (
