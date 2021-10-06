@@ -90,7 +90,7 @@ return (
       border-width: 1px;
     `}>GET WEATHER</button>
   </form>
-  {weather.data !== undefined && data.weather ? (
+  {weather.data !== undefined ? (
           <div>
             <DisplayWeather data={weather.data}></DisplayWeather>
           </div>
