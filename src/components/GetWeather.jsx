@@ -13,22 +13,25 @@ const GetWeather = () => {
   });
 
   const [weather, setWeather] = useState([]);
+  const [message, setMessage] = useState('');
   async function getWeatherData(event) {
     event.preventDefault();
-    if (form.city === '') {
-      alert('Add a city');
-    } else {
       try {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${form.city},${form.country}&units=metric&appid=${apiKey}`,
         );
         const  data  = await response.json();
-        setWeather({
-          data: data,
-        });
+        if (data.cod === '404') {
+          setMessage(data.message)
+          setWeather('')
+        } else {
+          setWeather({
+            data: data,
+          });
+          setMessage('')
+        };
       } catch (error) {
         console.log(error);
-      }
     }
   }
 
@@ -59,6 +62,7 @@ const GetWeather = () => {
             name="city"
             placeholder="City"
             onChange={(event) => handleChange(event)}
+            required
             css={css`
               width: 20%;
               padding: 10px 20px;
@@ -101,11 +105,12 @@ const GetWeather = () => {
             GET WEATHER
           </button>
         </form>
-        {weather.data !== undefined ? (
+        {weather?.data?.weather ? (
           <div>
             <DisplayWeather data={weather.data}></DisplayWeather>
           </div>
         ) : null}
+        {message.length > 0 ? <p>{message}</p> : null}
       </div>
     </>
   );
